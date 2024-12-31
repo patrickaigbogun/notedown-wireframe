@@ -28,7 +28,7 @@ export default function Navbar() {
 			</div>
 			<div className="navbar-end gap-x-2">
 				<Link href="/signup" className="btn btn-primary">Get Started</Link>
-				<ThemeController/>
+				<ThemeController />
 			</div>
 		</div>
 	);
