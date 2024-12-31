@@ -10,8 +10,7 @@ env_path = Path(__file__).parent.parent / '.env'
 load_dotenv(env_path)
 
 # Set default database URL if not found in environment
-DEFAULT_DB_URL = "postgresql://avnadmin:AVNS_u5si5zKjSYxhU2v1FuG@pg-26eae491-osasinnook-8e1a.k.aivencloud.com:17581/defaultdb?sslmode=require"
-DATABASE_URL = os.getenv("DATABASE_URL", DEFAULT_DB_URL)
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Replace postgres:// with postgresql://
 DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://")
