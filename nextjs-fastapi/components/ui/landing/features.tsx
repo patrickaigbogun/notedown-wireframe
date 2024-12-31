@@ -28,17 +28,17 @@ export default function Features() {
 
   return (
     <section id="features" className="py-24 bg-base-200">
-      <div className="container mx-auto px-4">
+      <div className="container px-4 mx-auto">
         <div className="text-center">
-          <h2 className="text-4xl font-bold mb-4">Features You'll Love</h2>
+          <h2 className="mb-4 text-4xl font-bold">Features You&apos;ll Love</h2>
           <p className="text-lg text-base-content/70">
             Everything you need for better note-taking
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+        <div className="grid grid-cols-1 gap-8 mt-16 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
-            <div key={index} className="card bg-base-100 shadow-xl">
-              <div className="card-body items-center text-center">
+            <div key={index} className="shadow-xl card bg-base-100">
+              <div className="items-center text-center card-body">
                 <div className="mb-4">{feature.icon}</div>
                 <h3 className="card-title">{feature.title}</h3>
                 <p>{feature.description}</p>

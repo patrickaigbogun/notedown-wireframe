@@ -39,7 +39,7 @@ export default function Testimonials() {
                     <User size={32} />
                   </div>
                 </div>
-                <p className="mb-4 italic">"{testimonial.content}"</p>
+                <p className="mb-4 italic">&quot;{testimonial.content}&quot;</p>
                 <div>
                   <h4 className="font-semibold">{testimonial.author}</h4>
                   <p className="text-sm text-base-content/70">{testimonial.role}</p>

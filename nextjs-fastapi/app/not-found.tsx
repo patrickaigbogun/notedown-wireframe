@@ -17,7 +17,7 @@ export default function NotFound() {
 				<h1 className="mb-4 text-5xl font-bold">404</h1>
 				<h2 className="mb-6 text-2xl font-semibold">Page Not Found</h2>
 				<p className="mb-8 text-base-content/70">
-					Oops! Looks like this note got lost in space. Don't worry, we've got plenty of other pages for you to explore.
+					Oops! Looks like this note got lost in space. Don&apos;t worry, we&apos;ve got plenty of other pages for you to explore.
 				</p>
 
 				{/* Action Buttons */}
