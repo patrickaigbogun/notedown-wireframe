@@ -23,23 +23,23 @@ export default function Testimonials() {
 
   return (
     <section id="testimonials" className="py-24">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">What Users Say</h2>
+      <div className="container px-4 mx-auto">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-4xl font-bold">What Users Say</h2>
           <p className="text-lg text-base-content/70">
             Join thousands of satisfied Notedown users
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="card bg-base-100 shadow-xl">
+            <div key={index} className="shadow-xl card bg-base-100">
               <div className="card-body">
-                <div className="avatar placeholder mb-4">
-                  <div className="bg-neutral text-neutral-content rounded-full w-16">
+                <div className="mb-4 avatar placeholder">
+                  <div className="w-16 rounded-full bg-neutral text-neutral-content">
                     <User size={32} />
                   </div>
                 </div>
-                <p className="italic mb-4">"{testimonial.content}"</p>
+                <p className="mb-4 italic">"{testimonial.content}"</p>
                 <div>
                   <h4 className="font-semibold">{testimonial.author}</h4>
                   <p className="text-sm text-base-content/70">{testimonial.role}</p>

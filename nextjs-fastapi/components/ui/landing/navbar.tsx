@@ -1,7 +1,7 @@
 // / components/Navbar.tsx
 import Link from 'next/link';
 import { List } from '@phosphor-icons/react/dist/ssr';
-import ThemeController from './theme-controller';
+import ThemeController from '../theme-controller';
 
 export default function Navbar() {
 	return (

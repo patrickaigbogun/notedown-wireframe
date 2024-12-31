@@ -1,10 +1,10 @@
 // app/page.tsx
-import Hero from '@/components/ui/hero';
-import Features from '@/components/ui/features';
-import Testimonials from '@/components/ui/testimonials';
-import CTASection from '@/components/ui/cta';
-import Navbar from '@/components/ui/navbar';
-import Footer from '@/components/ui/footer';
+import Hero from '@/components/ui/landing/hero';
+import Features from '@/components/ui/landing/features';
+import Testimonials from '@/components/ui/landing/testimonials';
+import CTASection from '@/components/ui/landing/cta';
+import Navbar from '@/components/ui/landing/navbar';
+import Footer from '@/components/ui/landing/footer';
 
 export default function Home() {
   return (
