@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { User, Envelope, LockKey } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
-import { ErrorToast, SuccessToast } from '@/components/ui/auth/toast';
+// import { ErrorToast, SuccessToast } from '@/components/ui/auth/toast';
 
 export default function RegisterPage() {
 	const baseApiUrl = 'http://127.0.0.1:8000/'
@@ -40,8 +40,9 @@ export default function RegisterPage() {
 
 		if (response.status == 200) {
 			setSuccessMessage(true)
+			
 		} else {
-			<ErrorToast message={'Your registration was unsuccessful'} />
+			// <ErrorToast message={'Your registration was unsuccessful'} />
 		}
 
 		console.log('Form submitted:', formData);
