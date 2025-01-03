@@ -3,7 +3,7 @@ import re
 import uuid
 import bcrypt
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 # FastAPI and related imports
 from fastapi import FastAPI, HTTPException, status, Depends, Request
@@ -22,6 +22,8 @@ from pydantic import BaseModel, EmailStr, Field
 # Local application imports
 from database.models import User, UserActivity, Note
 from database.main import get_db
+from uuid import UUID
+
 
 # Initialize FastAPI application
 app = FastAPI()
@@ -60,6 +62,9 @@ class NoteResponse(BaseModel):
     content: str
     is_private: bool
     created_at: datetime
+
+class DeleteNoteRequest(BaseModel):
+    user_id: UUID
 
 def hash_password_with_id(password: str, user_id: str) -> str:
     """
@@ -161,6 +166,16 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
         return {"message": f"Login successful! Welcome back, {user.username}."}
     raise HTTPException(status_code=400, detail="Invalid credentials.")
 
+
+@app.get("/get_user_activity/{user_id}")
+async def get_activity(user_id: uuid.UUID, db: Session = Depends(get_db)):
+    activity = db.query(UserActivity).filter(UserActivity.user_id == user_id).first()
+    if not activity:
+        raise HTTPException(status_code=404, detail="Activity not found")
+    return activity
+
+
+
 @app.post("/create_note/{user_id}", response_model=NoteResponse)
 async def create_note(user_id: uuid.UUID, note: NoteCreate, db: Session = Depends(get_db)):
     """
@@ -200,19 +215,31 @@ async def create_note(user_id: uuid.UUID, note: NoteCreate, db: Session = Depend
         db.rollback()
         raise HTTPException(status_code=400, detail=f"Note creation failed: {str(e)}")
 
+
+
+@app.get("/get_notes/{user_id}", response_model=List[NoteResponse])
+async def get_notes(user_id: uuid.UUID, db: Session = Depends(get_db)):
+    notes = db.query(Note).filter(Note.user_id == user_id).all()
+    if not notes:
+        return []
+    return notes
+
+
 @app.delete("/delete_note/{note_id}")
-async def delete_note(note_id: uuid.UUID, user_id: uuid.UUID, db: Session = Depends(get_db)):
+async def delete_note(note_id: UUID, delete_request: DeleteNoteRequest, db: Session = Depends(get_db)):
     """
     Delete a note and update user activity metrics.
     Verifies note ownership before deletion.
     """
+    user_id = delete_request.user_id
+
     db_user = db.query(User).filter(User.id == user_id).first()
     if not db_user:
         raise HTTPException(status_code=404, detail=f"User ID '{user_id}' not found.")
     
     note = db.query(Note).filter(Note.id == note_id, Note.user_id == user_id).first()
     if not note:
-        raise HTTPException(status_code=404, detail=f"Note not found or unauthorized.")
+        raise HTTPException(status_code=404, detail="Note not found or unauthorized.")
     
     try:
         activity = db.query(UserActivity).filter(UserActivity.user_id == user_id).first()
@@ -222,10 +249,15 @@ async def delete_note(note_id: uuid.UUID, user_id: uuid.UUID, db: Session = Depe
 
         db.delete(note)
         db.commit()
+
         return {"message": f"Note '{note_id}' deleted successfully."}
+    except IntegrityError as e:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="Failed to delete the note due to database integrity issue.")
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=400, detail=f"Delete failed: {str(e)}")
+
 
 # Custom exception handler
 @app.exception_handler(HTTPException)
