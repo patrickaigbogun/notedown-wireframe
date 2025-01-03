@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { User, Envelope, LockKey } from '@phosphor-icons/react/dist/ssr';
+import { User, LockKey } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 // import { ErrorToast, SuccessToast } from '@/components/ui/auth/toast';
 
