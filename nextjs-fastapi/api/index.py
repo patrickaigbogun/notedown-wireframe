@@ -1,15 +1,23 @@
-from fastapi import FastAPI, HTTPException, status, Depends
+from fastapi import FastAPI, HTTPException, status, Depends, Form
 from pydantic import BaseModel
 from database.models import User, UserActivity, Note
 from database.main import get_db
 from sqlalchemy.orm import Session
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware
 
 
 import uuid
-
 app = FastAPI()
 
+# Allow all origins for demo purposes (you should adjust this for production)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or set specific allowed origins
+    allow_credentials=True,
+    allow_methods=["*"],  # or set specific allowed methods
+    allow_headers=["*"],  # or set specific allowed headers
+)
 
 
 class UserRegister(BaseModel):
@@ -18,7 +26,7 @@ class UserRegister(BaseModel):
     password: str
 
 class UserLogin(BaseModel):
-    email: str
+    username: str
     password: str
 
 class NoteCreate(BaseModel):
@@ -61,7 +69,7 @@ async def register(user: UserRegister, db: Session = Depends(get_db)):
 @app.post("/login", status_code=status.HTTP_200_OK)
 async def login(user: UserLogin, db: Session = Depends(get_db)):
     try:
-        db_user = db.query(User).filter(User.email == user.email).first()
+        db_user = db.query(User).filter(User.username == user.username).first()
         if db_user and db_user.password == user.password:
             return {"message": "Login successful"}
         raise HTTPException(status_code=400, detail="Invalid credentials")

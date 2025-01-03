@@ -4,6 +4,8 @@ import { List } from '@phosphor-icons/react/dist/ssr';
 import ThemeController from '../theme-controller';
 
 export default function Navbar() {
+
+	const baseUrl = 'http://localhost:3000/'
 	return (
 		<div className="fixed z-50 navbar bg-base-100/80 backdrop-blur-md">
 			<div className="navbar-start">
@@ -27,7 +29,7 @@ export default function Navbar() {
 				</ul>
 			</div>
 			<div className="navbar-end gap-x-2">
-				<Link href="/signup" className="btn btn-primary">Get Started</Link>
+				<Link href={`${baseUrl}auth/register`} className="btn btn-primary">Register</Link>
 				<ThemeController />
 			</div>
 		</div>
