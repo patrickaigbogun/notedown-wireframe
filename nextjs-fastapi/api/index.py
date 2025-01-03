@@ -203,7 +203,13 @@ async def get_activity(
     if not activity:
         raise HTTPException(status_code=404, detail="Activity not found")
 
-    return activity
+    return {
+        "notes_created": activity.notes_created,
+        "notes_deleted": activity.notes_deleted,
+        "notes_shared": activity.notes_shared,
+        "times_logged_in": activity.times_logged_in,
+        "private_notes": activity.private_notes
+    }
 
 @app.delete("/delete_user/{user_id}")
 async def delete_user(user_id: UUID, db: Session = Depends(get_db)):
