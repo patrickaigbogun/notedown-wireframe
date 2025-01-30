@@ -4,11 +4,10 @@
 import { useState } from 'react';
 import { User, LockKey } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { baseUrl, baseApiUrl } from '@/constants/const';
 // import { ErrorToast, SuccessToast } from '@/components/ui/auth/toast';
 
 export default function LOginPage() {
-	const baseApiUrl = 'http://127.0.0.1:8000/';
-	const baseUrl = 'http://localhost:3000/'
 
 
 	// const pathToProfile = `${baseUrl}profile/${username}`
@@ -35,7 +34,7 @@ export default function LOginPage() {
 		}
 
 
-		const response = await fetch(`${baseApiUrl}login/`, {
+		const response = await fetch(`${baseApiUrl}login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
