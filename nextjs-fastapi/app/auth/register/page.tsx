@@ -4,11 +4,10 @@
 import { useState } from 'react';
 import { User, Envelope, LockKey } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { baseApiUrl, baseUrl } from '@/constants/const';
 // import { ErrorToast, SuccessToast } from '@/components/ui/auth/toast';
 
 export default function RegisterPage() {
-	const baseApiUrl = 'http://127.0.0.1:8000/'
-	const baseUrl = 'http://localhost:3000/'
 
 	const [formData, setFormData] = useState({
 		username: '',
@@ -26,7 +25,7 @@ export default function RegisterPage() {
 		}
 
 
-		const response = await fetch(`${baseApiUrl}register/`, {
+		const response = await fetch(`${baseApiUrl}register`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -38,6 +37,7 @@ export default function RegisterPage() {
 			}),
 		});
 
+		console.log(response.text())
 		if (response.status == 200) {
 			setSuccessMessage(true)
 			
